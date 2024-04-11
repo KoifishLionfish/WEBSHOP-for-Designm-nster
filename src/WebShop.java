@@ -4,13 +4,8 @@ public class WebShop {
 
     public static void main(String[] args) {
         CEO ceo = new CEO("Wigells CEO");
-        Pants pants = new Pants();
-        TShirt tShirt = new TShirt();
-        Skirt skirt = new Skirt();
 
-        skirt.setPrice("150 kr");
-        tShirt.setPrice("100 kr");
-        pants.setPrice("200 kr");
+
 
 
 
@@ -74,11 +69,6 @@ public class WebShop {
     }
     public static void buyTShirt(Scanner scanner, CEO ceo, Customer customer) {
 
-        TShirt tShirt = new TShirt();
-        tShirt.setPrice("100 kr");
-
-
-
 
         System.out.println("You've selected TShirt.");
 
@@ -86,26 +76,29 @@ public class WebShop {
 
         System.out.print("Enter size (M, L): ");
         String size = scanner.nextLine();
-        tShirt.setSize(size);
+
 
 
         System.out.print("Enter material (cotton, wool): ");
         String material = scanner.nextLine();
-        tShirt.setMaterial(material);
+
 
         System.out.print("Enter color (blue, green, yellow): ");
         String color = scanner.nextLine();
-        tShirt.setColor(color);
+
 
 
         System.out.print("Enter slevelength in cm (15, 20, 30): ");
         String sleeves = scanner.nextLine();
-        tShirt.setSleeves(sleeves);
+
 
         System.out.print("Enter neck type (round, v-neck, square): ");
         String neck = scanner.nextLine();
-        tShirt.setNeck(neck);
 
+
+
+        TShirtDirector director = new TShirtDirector();
+        TShirt tShirt = director.constructTShirt(size, material, color, sleeves, neck);
 
 
 
@@ -120,7 +113,7 @@ public class WebShop {
 
 
         ClothingCommand addDecorationCommand = new DecorateTShirtCommand(tShirt, color, sleeves, neck);
-        tShirt.setDecorationCommand(addDecorationCommand);
+        tShirt.setDecorationCommandTshirt(addDecorationCommand);
 
 
         System.out.println("\n");
@@ -136,33 +129,25 @@ public class WebShop {
     public static void buyPants(Scanner scanner, CEO ceo, Customer customer) {
 
 
-        Pants pants = new Pants();
-        pants.setPrice("200 kr");
-
         System.out.println("You've selected Pants.");
-
-
 
         System.out.print("Enter size (M, L): ");
         String size = scanner.nextLine();
-        pants.setSize(size);
 
         System.out.print("Enter material (cotton, wool): ");
         String material = scanner.nextLine();
-        pants.setMaterial(material);
 
         System.out.print("Enter color (red, blue, green): ");
         String color = scanner.nextLine();
-        pants.setColor(material);
 
-        System.out.println("Enter fit (regular, skinny, tapered: ");
+        System.out.println("Enter fit (regular, skinny, tapered): ");
         String fit = scanner.nextLine();
-        pants.setFit(fit);
 
         System.out.println("Enter desired length of pants in cm: ");
         String length = scanner.nextLine();
-        pants.setLength(length);
 
+        PantsDirector director = new PantsDirector();
+        Pants pants = director.constructPants(size, material, color, fit, length);
 
         System.out.println("You've bought Pants for " + pants.getPrice() + " with:");
         System.out.println("Size: " + pants.getSize());
@@ -171,7 +156,7 @@ public class WebShop {
         System.out.println("Thank you " + customer.getName() + " for your purchase! The pants will be sent to " + customer.getAddress() + ".");
 
         ClothingCommand addDecorationCommand = new DecoratePantsCommand(pants, color, fit, length);
-        pants.setDecorationCommand(addDecorationCommand);
+        pants.setDecorationCommandPants(addDecorationCommand);
 
         System.out.println("\n");
 
@@ -181,15 +166,12 @@ public class WebShop {
         System.out.println("\n");
         ceo.update("Pants klar.");
 
-
         System.out.println("\n");
-
     }
 
     public static void buySkirt(Scanner scanner, CEO ceo, Customer customer) {
 
-        Skirt skirt = new Skirt();
-        skirt.setPrice("150 kr");
+
 
 
 
@@ -200,29 +182,32 @@ public class WebShop {
 
         System.out.print("Enter size (M, L): ");
         String size = scanner.nextLine();
-        skirt.setSize(size);
+
 
         System.out.print("Enter material (cotton, wool): ");
         String material = scanner.nextLine();
-        skirt.setMaterial(material);
+
 
 
         System.out.println("Enter skirt color (blue, green, yellow): ");
         String color = scanner.nextLine();
-        skirt.setColor(color);
+
 
         System.out.println("Enter skirt waistline in cm (65, 72, 82): ");
         String waistline = scanner.nextLine();
-        skirt.setWaistline(waistline);
+
 
         System.out.println("Enter skirt pattern (striped, uniform, wavy): ");
         String pattern = scanner.nextLine();
-        skirt.setPattern(pattern);
 
+
+
+
+        SkirtDirector director = new SkirtDirector();
+        Skirt skirt = director.constructSkirt(size, material, color, waistline, pattern);
 
         ClothingCommand addPatternCommand = new DecorateSkirtCommand(skirt, pattern, waistline);
-
-        skirt.setDecorationCommand(addPatternCommand);
+        skirt.setDecorationCommandSkirt(addPatternCommand);
 
 
         System.out.println("You've bought Skirt for " + skirt.getPrice() + " with:");

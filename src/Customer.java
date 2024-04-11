@@ -1,25 +1,18 @@
-// Affärsobjekt Customer
+
 public class Customer {
-    private String id;
+
     private String name;
     private String address;
     private String email;
 
-    public Customer(String id, String name, String address, String email) {
-        this.id = id;
+    public Customer(String name, String address, String email) {
+
         this.name = name;
         this.address = address;
         this.email = email;
     }
     public Customer() {
 
-    }
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {

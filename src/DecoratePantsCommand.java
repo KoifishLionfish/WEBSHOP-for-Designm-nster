@@ -14,8 +14,8 @@ public class DecoratePantsCommand implements ClothingCommand {
     @Override
     public void execute() {
         pants.setColor(color);
-        pants.setFit(fit);
-        pants.setLength(length);
-        System.out.println("Decorated Pants with fit: " +  fit + ", length: " + length + "cm.");
+        pants.fit();
+        pants.Length(length);
+        System.out.println("Decorated Pants with fit: " +  fit + ", length: " + length + "cm" + "and color:" + color);
     }
 }

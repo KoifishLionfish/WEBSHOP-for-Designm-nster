@@ -4,51 +4,79 @@ public class Pants extends Clothing {
     private String price;
     private ClothingCommand decorationCommand;
 
-    // Constructors
-    public Pants() {
-        super();
+    public void setDecorationCommandPants(ClothingCommand command) {
+        this.decorationCommand = command;
     }
 
-    public Pants(String size, String material, String color, String fit, String length, String price) {
-        super(size, material, color);
-        this.fit = fit;
-        this.length = length;
+    private Pants(PantsBuilder builder) {
+        super(builder.size, builder.material, builder.color);
+        this.fit = builder.fit;
+        this.length = builder.length;
+        this.price = builder.price;
+    }
+
+    public static PantsBuilder Builder() {
+        return new PantsBuilder();
+    }
+
+    @Override
+    public void decorate() {
+            decorationCommand.execute();
     }
 
     public String getPrice() {
         return price;
+
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void Length(String length) {
     }
 
-    public String getFit() {
+    public String fit(){
         return fit;
     }
 
-    public void setFit(String fit) {
-        this.fit = fit;
-    }
+    public static class PantsBuilder {
+        private String size;
+        private String material;
+        private String color;
+        private String fit;
+        private String length;
+        private String price;
 
-    public String getLength() {
-        return length;
-    }
+        public PantsBuilder size(String size) {
+            this.size = size;
+            return this;
+        }
 
-    public void setLength(String length) {
-        this.length = length;
-    }
+        public PantsBuilder material(String material) {
+            this.material = material;
+            return this;
+        }
+
+        public PantsBuilder color(String color) {
+            this.color = color;
+            return this;
+        }
+
+        public PantsBuilder fit(String fit) {
+            this.fit = fit;
+            return this;
+        }
+
+        public PantsBuilder length(String length) {
+            this.length = length;
+            return this;
+        }
+
+        public PantsBuilder price(String price) {
+            this.price = price;
+            return this;
+        }
 
 
-    public void setDecorationCommand(ClothingCommand command) {
-        this.decorationCommand = command;
-    }
-
-    public void decorate() {
-        if (decorationCommand != null) {
-            decorationCommand.execute();
-        } else {
-            System.out.println("No decoration command set for these pants.");
+        public Pants build() {
+            return new Pants(this);
         }
     }
 }
