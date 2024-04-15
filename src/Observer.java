@@ -1,3 +1,3 @@
-public interface CEOobserver {
+public interface Observer {
     void update(String message);
 }

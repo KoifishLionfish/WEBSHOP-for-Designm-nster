@@ -10,8 +10,7 @@ public class Pants extends Clothing {
 
     private Pants(PantsBuilder builder) {
         super(builder.size, builder.material, builder.color);
-        this.fit = builder.fit;
-        this.length = builder.length;
+
         this.price = builder.price;
     }
 

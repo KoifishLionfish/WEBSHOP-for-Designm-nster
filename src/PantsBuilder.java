@@ -1,11 +1,10 @@
-public class PantsDirector {
-    public Pants constructPants(String size, String material, String color, String fit, String length) {
+public class PantsBuilder {
+    public Pants buildPants(String size, String material, String color) {
         return Pants.Builder()
                 .size(size)
                 .material(material)
                 .color(color)
-                .fit(fit)
-                .length(length)
+
                 .price("200 kr")
                 .build();
     }

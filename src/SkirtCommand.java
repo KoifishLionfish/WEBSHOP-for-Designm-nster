@@ -1,9 +1,9 @@
-public class DecorateSkirtCommand implements ClothingCommand {
+public class SkirtCommand implements ClothingCommand {
     private String pattern;
     private String waistline;
     private Skirt skirt;
 
-    public DecorateSkirtCommand(Skirt skirt, String pattern, String waistline) {
+    public SkirtCommand(Skirt skirt, String pattern, String waistline) {
         this.skirt = skirt;
         this.pattern = pattern;
         this.waistline = waistline;

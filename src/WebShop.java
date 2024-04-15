@@ -1,11 +1,17 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class WebShop {
 
+    private List<Observers> observers = new ArrayList<>();
+
     public static void main(String[] args) {
-        CEO ceo = new CEO("Wigells CEO");
 
+        WebShop webShop = new WebShop();
 
+        webShop.addObserver(new Observers("Wigells CEO"));
+        webShop.addObserver(new Observers("Verran CEO"));
 
 
 
@@ -47,14 +53,14 @@ public class WebShop {
 
             switch (choice) {
                 case 1:
-                    buyPants(scanner, ceo, customer);
+                    buyPants(scanner, webShop, customer);
                     break;
                 case 2:
-                    buySkirt(scanner, ceo, customer);
+                    buySkirt(scanner,webShop, customer);
                     break;
 
                 case 3:
-                    buyTShirt(scanner, ceo, customer);
+                    buyTShirt(scanner,webShop, customer);
                     break;
                 case 4:
                     exit = true;
@@ -67,7 +73,7 @@ public class WebShop {
         scanner.close();
         System.out.println("Thank you for visiting the Shop!");
     }
-    public static void buyTShirt(Scanner scanner, CEO ceo, Customer customer) {
+    public static void buyTShirt(Scanner scanner, WebShop webShop, Customer customer) {
 
 
         System.out.println("You've selected TShirt.");
@@ -97,8 +103,8 @@ public class WebShop {
 
 
 
-        TShirtDirector director = new TShirtDirector();
-        TShirt tShirt = director.constructTShirt(size, material, color, sleeves, neck);
+        TShirtBuilder director = new TShirtBuilder();
+        TShirt tShirt = director.buildTShirt(size, material, color);
 
 
 
@@ -112,21 +118,24 @@ public class WebShop {
         System.out.println("Color: " + tShirt.getColor());
 
 
-        ClothingCommand addDecorationCommand = new DecorateTShirtCommand(tShirt, color, sleeves, neck);
+        ClothingCommand addDecorationCommand = new TShirtCommand(tShirt, sleeves, neck);
         tShirt.setDecorationCommandTshirt(addDecorationCommand);
 
 
         System.out.println("\n");
-        ceo.update("T-Shirt tillverkas.");
+        webShop.notifyObservers("T-Shirt tillverkas.");
+
+
+
 
         tShirt.decorate();
 
         System.out.println("\n");
-        ceo.update("T-Shirt klar.");
+        webShop.notifyObservers("T-Shirt klar.");
 
 
     }
-    public static void buyPants(Scanner scanner, CEO ceo, Customer customer) {
+    public static void buyPants(Scanner scanner, WebShop webShop, Customer customer) {
 
 
         System.out.println("You've selected Pants.");
@@ -146,8 +155,8 @@ public class WebShop {
         System.out.println("Enter desired length of pants in cm: ");
         String length = scanner.nextLine();
 
-        PantsDirector director = new PantsDirector();
-        Pants pants = director.constructPants(size, material, color, fit, length);
+        PantsBuilder director = new PantsBuilder();
+        Pants pants = director.buildPants(size, material, color);
 
         System.out.println("You've bought Pants for " + pants.getPrice() + " with:");
         System.out.println("Size: " + pants.getSize());
@@ -155,21 +164,21 @@ public class WebShop {
         System.out.println("Color: " + pants.getColor());
         System.out.println("Thank you " + customer.getName() + " for your purchase! The pants will be sent to " + customer.getAddress() + ".");
 
-        ClothingCommand addDecorationCommand = new DecoratePantsCommand(pants, color, fit, length);
+        ClothingCommand addDecorationCommand = new PantsCommand(pants, fit, length);
         pants.setDecorationCommandPants(addDecorationCommand);
 
         System.out.println("\n");
 
-        ceo.update("Pants tillverkas.");
+        webShop.notifyObservers("Pants tillverkas.");
         pants.decorate();
 
         System.out.println("\n");
-        ceo.update("Pants klar.");
+        webShop.notifyObservers("Pants klar.");
 
         System.out.println("\n");
     }
 
-    public static void buySkirt(Scanner scanner, CEO ceo, Customer customer) {
+    public static void buySkirt(Scanner scanner, WebShop webShop, Customer customer) {
 
 
 
@@ -203,10 +212,10 @@ public class WebShop {
 
 
 
-        SkirtDirector director = new SkirtDirector();
-        Skirt skirt = director.constructSkirt(size, material, color, waistline, pattern);
+        SkirtBuilder director = new SkirtBuilder();
+        Skirt skirt = director.buildSkirt(size, material, color);
 
-        ClothingCommand addPatternCommand = new DecorateSkirtCommand(skirt, pattern, waistline);
+        ClothingCommand addPatternCommand = new SkirtCommand(skirt, pattern, waistline);
         skirt.setDecorationCommandSkirt(addPatternCommand);
 
 
@@ -216,15 +225,24 @@ public class WebShop {
         System.out.println("Color: " + skirt.getColor());
         System.out.println("Thank you " + customer.getName() + "for your purchase! The skirt will be sent to " + customer.getAddress() + ".");
 
-        ceo.update("Skirt tillverkas.");
+        webShop.notifyObservers("Skirt tillverkas.");
 
         skirt.decorate();
 
         System.out.println("\n");
 
-        ceo.update("Skirt klar.");
+        webShop.notifyObservers("Skirt klar.");
 
         System.out.println("\n");
+    }
+    public void addObserver(Observers observer) {
+        observers.add(observer);
+    }
+
+    public void notifyObservers(String message) {
+        for (Observers observer : observers) {
+            observer.update(message);
+        }
     }
 }
 

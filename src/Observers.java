@@ -1,5 +1,9 @@
-public class CEO implements Observer {
+public class Observers implements Observer {
     private String name;
+
+    public Observers(String name) {
+        this.name = name;
+    }
 
     @Override
     public void update(String message) {
